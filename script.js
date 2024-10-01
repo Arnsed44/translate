@@ -156,9 +156,9 @@ const interpolaterToEnglish = {
     "you": "right",
     "za": "tea",
     "zi": "yes",
-    "," : ",",
-    " " : " "
-    
+    " ": " ",
+    "\"": "\"",
+    ",": ","
 };
 
 // Inverse mapping from English to Interpolater
@@ -166,26 +166,34 @@ const englishToInterpolater = Object.fromEntries(
     Object.entries(interpolaterToEnglish).map(([key, value]) => [value, key])
 );
 
-// Function to translate words
-function translateToEnglish(word) {
-    const trimmedWord = word.trim().toLowerCase();
-    return interpolaterToEnglish[trimmedWord] || "Word not found in Interpolater.";
+// Function to translate sentences
+function translateToEnglish(sentence) {
+    const words = sentence.split(/[\s,]+/);
+    const translatedWords = words.map(word => {
+        const trimmedWord = word.trim().toLowerCase();
+        return interpolaterToEnglish[trimmedWord] || `Word not found: ${trimmedWord}`;
+    });
+    return translatedWords.join(' ');
 }
 
-function translateToInterpolater(word) {
-    const trimmedWord = word.trim().toLowerCase();
-    return englishToInterpolater[trimmedWord] || "Word not found in English.";
+function translateToInterpolater(sentence) {
+    const words = sentence.split(/[\s,]+/);
+    const translatedWords = words.map(word => {
+        const trimmedWord = word.trim().toLowerCase();
+        return englishToInterpolater[trimmedWord] || `Word not found: ${trimmedWord}`;
+    });
+    return translatedWords.join(' ');
 }
 
 // Handle button clicks
 document.getElementById("translateToEnglishBtn").addEventListener("click", () => {
-    const inputWord = document.getElementById("inputWordToEnglish").value;
-    const result = translateToEnglish(inputWord);
+    const inputSentence = document.getElementById("inputWordToEnglish").value;
+    const result = translateToEnglish(inputSentence);
     document.getElementById("resultToEnglish").innerText = result;
 });
 
 document.getElementById("translateToInterpolaterBtn").addEventListener("click", () => {
-    const inputWord = document.getElementById("inputWordToInterpolater").value;
-    const result = translateToInterpolater(inputWord);
+    const inputSentence = document.getElementById("inputWordToInterpolater").value;
+    const result = translateToInterpolater(inputSentence);
     document.getElementById("resultToInterpolater").innerText = result;
 });
