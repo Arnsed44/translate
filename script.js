@@ -181,7 +181,7 @@ const englishToInterpolater = Object.fromEntries(
 
 document.getElementById('translateToEnglish').addEventListener('click', function() {
     const input = document.getElementById('interpolaterInput').value.toLowerCase().trim();
-    const words = input.split(' ');
+    const words = input.split(/[\s,]+/); // Split by whitespace or commas
     let output = '';
 
     for (const word of words) {
@@ -200,7 +200,7 @@ document.getElementById('translateToEnglish').addEventListener('click', function
 
 document.getElementById('translateToInterpolater').addEventListener('click', function() {
     const input = document.getElementById('englishInput').value.toLowerCase().trim();
-    const words = input.split(' ');
+    const words = input.split(/[\s,]+/); // Split by whitespace or commas
     let output = '';
 
     for (const word of words) {
@@ -219,7 +219,7 @@ document.getElementById('translateToInterpolater').addEventListener('click', fun
         } else {
             const conjugatedWord = conjugateVerb(word);
             if (conjugatedWord) {
-                output += `${genderArticles["human"]} ${conjugatedWord} `; // Assume human actions by default
+                output += `${genderArticles["human"]} ${conjugatedWord} `; // Assume human action
             } else {
                 output = 'Error: Unable to translate the sentence or word.';
                 break; // Stop processing on error
@@ -230,24 +230,9 @@ document.getElementById('translateToInterpolater').addEventListener('click', fun
     document.getElementById('interpolaterOutput').innerText = output.trim();
 });
 
-// Example verb conjugation function
 function conjugateVerb(word) {
-    if (word.endsWith('e')) {
-        return word.slice(0, -1) + 'e'; // Example: "make" -> "make"
-    } else if (word.endsWith('d')) {
-        return word.slice(0, -1) + 'den'; // Example: "played" -> "playden"
-    } else if (word.endsWith('y')) {
-        return word.slice(0, -1) + 'ie'; // Example: "cry" -> "crie"
-    } else if (word.endsWith('ing')) {
-        return word.slice(0, -3) + 'inden'; // Example: "running" -> "runinden"
-    }
-    return null;
-}
-
-// Example common word mapping function
-function commonWordMapping(word) {
-    if (word.endsWith('tus')) {
-        return word.slice(0, -3) + 'tus'; // They
-    }
-    return null;
+    // Simple verb conjugation rules (extend as necessary)
+    if (word === 'go') return 'gan'; // Example conjugation
+    // Add more conjugation rules as needed
+    return null; // Return null if no conjugation is found
 }
