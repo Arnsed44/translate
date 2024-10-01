@@ -215,7 +215,7 @@ const wordGenders = {
     "feminas": "li",
     "folaaz": "le",
     "fransosik": "le",
-    "genus": "les",
+    "genus": "li",
     "ghurfa": "le",
     "go": "li",
     "granda": "les",
