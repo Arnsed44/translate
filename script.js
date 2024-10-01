@@ -173,7 +173,7 @@ function translateToEnglish(sentence) {
         const trimmedWord = word.trim().toLowerCase();
         return interpolaterToEnglish[trimmedWord] || trimmedWord; // Return original word if not found
     });
-    return translatedWords.join('');
+    return translatedWords.join(' ').replace(/\s+/g, ' ').trim(); // Add spaces between words and trim
 }
 
 // Function to translate sentences from English to Interpolater
@@ -183,7 +183,7 @@ function translateToInterpolater(sentence) {
         const trimmedWord = word.trim().toLowerCase();
         return englishToInterpolater[trimmedWord] || trimmedWord; // Return original word if not found
     });
-    return translatedWords.join('');
+    return translatedWords.join(' ').replace(/\s+/g, ' ').trim(); // Add spaces between words and trim
 }
 
 // Handle button clicks
