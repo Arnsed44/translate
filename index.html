@@ -4,17 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interpolater Translator</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Optional: link to your CSS file -->
 </head>
 <body>
-    <div class="container">
-        <h1>Interpolater Translator</h1>
-        <textarea id="inputText" placeholder="Enter text here..."></textarea>
-        <button onclick="translateToInterpolater()">Translate to Interpolater</button>
-        <button onclick="translateToEnglish()">Translate to English</button>
-        <h2>Translation:</h2>
-        <textarea id="outputText" placeholder="Translation will appear here..." readonly></textarea>
+    <h1>Interpolater Translator</h1>
+    
+    <!-- English to Interpolater Translation -->
+    <div>
+        <h2>Translate English to Interpolater</h2>
+        <input id="englishInput" type="text" placeholder="Enter text in English" />
+        <button id="translateToInterpolater">Translate to Interpolater</button>
+        <div id="interpolaterOutput"></div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Interpolater to English Translation -->
+    <div>
+        <h2>Translate Interpolater to English</h2>
+        <input id="interpolaterInput" type="text" placeholder="Enter text in Interpolater" />
+        <button id="translateToEnglish">Translate to English</button>
+        <div id="englishOutput"></div>
+        <div id="suggestionOutput"></div> <!-- Suggestions for untranslated words -->
+    </div>
+
+    <script src="script.js"></script> <!-- Link to your JavaScript file -->
 </body>
 </html>
