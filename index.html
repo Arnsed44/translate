@@ -3,26 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interpolater Translation Tool</title>
+    <title>Translator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Interpolater Translation Tool</h1>
-
-        <div class="section">
-            <h2>Interpolater to English</h2>
-            <textarea id="inputInterpolater" placeholder="Enter Interpolater text..."></textarea>
-            <button onclick="translateToEnglish()">Translate</button>
-            <p id="outputEnglish"></p>
-        </div>
-
-        <div class="section">
-            <h2>English to Interpolater</h2>
-            <textarea id="inputEnglish" placeholder="Enter English text..."></textarea>
-            <button onclick="translateToInterpolater()">Translate</button>
-            <p id="outputInterpolater"></p>
-        </div>
+    <div>
+        <h2>Translate to English</h2>
+        <textarea id="inputWordToEnglish" placeholder="Enter Interpolater text"></textarea>
+        <button id="translateToEnglishBtn">Translate</button>
+        <p id="resultToEnglish"></p>
+    </div>
+    <div>
+        <h2>Translate to Interpolater</h2>
+        <textarea id="inputWordToInterpolater" placeholder="Enter English text"></textarea>
+        <button id="translateToInterpolaterBtn">Translate</button>
+        <p id="resultToInterpolater"></p>
     </div>
     <script src="script.js"></script>
 </body>
