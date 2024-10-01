@@ -166,23 +166,24 @@ const englishToInterpolater = Object.fromEntries(
     Object.entries(interpolaterToEnglish).map(([key, value]) => [value, key])
 );
 
-// Function to translate sentences
+// Function to translate sentences from Interpolater to English
 function translateToEnglish(sentence) {
-    const words = sentence.split(/[\s,]+/);
+    const words = sentence.split(/(?<=\s|,|")|(?=\s|,|")/); // Split preserving spaces, commas, and quotes
     const translatedWords = words.map(word => {
         const trimmedWord = word.trim().toLowerCase();
-        return interpolaterToEnglish[trimmedWord] || `Word not found: ${trimmedWord}`;
+        return interpolaterToEnglish[trimmedWord] || trimmedWord; // Return original word if not found
     });
-    return translatedWords.join(' ');
+    return translatedWords.join('');
 }
 
+// Function to translate sentences from English to Interpolater
 function translateToInterpolater(sentence) {
-    const words = sentence.split(/[\s,]+/);
+    const words = sentence.split(/(?<=\s|,|")|(?=\s|,|")/); // Split preserving spaces, commas, and quotes
     const translatedWords = words.map(word => {
         const trimmedWord = word.trim().toLowerCase();
-        return englishToInterpolater[trimmedWord] || `Word not found: ${trimmedWord}`;
+        return englishToInterpolater[trimmedWord] || trimmedWord; // Return original word if not found
     });
-    return translatedWords.join(' ');
+    return translatedWords.join('');
 }
 
 // Handle button clicks
