@@ -1,35 +1,22 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+    margin: 20px;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+h1, h2 {
+    color: #333;
 }
 
-h1 {
-    text-align: center;
-}
-
-textarea {
+input[type="text"] {
     width: 100%;
-    height: 100px;
     padding: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 button {
-    width: 100%;
-    padding: 10px;
+    padding: 10px 15px;
     background-color: #28a745;
     color: white;
     border: none;
@@ -41,13 +28,14 @@ button:hover {
     background-color: #218838;
 }
 
-#result {
-    margin-top: 20px;
-    font-weight: bold;
+div {
+    margin-bottom: 20px;
 }
 
-#definitions {
+#interpolaterOutput, #englishOutput, #suggestionOutput {
     margin-top: 10px;
-    font-style: italic;
-    color: #555;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa;
 }
