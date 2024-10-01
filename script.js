@@ -168,7 +168,9 @@ const genderArticles = {
     "other": "les"
 };
 
-const englishToInterpolater = Object.fromEntries(Object.entries(interpolaterToEnglish).map(([key, value]) => [value, key]));
+const englishToInterpolater = Object.fromEntries(
+    Object.entries(interpolaterToEnglish).map(([key, value]) => [value, key])
+);
 
 document.getElementById('translateToEnglish').addEventListener('click', function() {
     const input = document.getElementById('interpolaterInput').value.toLowerCase().trim();
