@@ -3,29 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interpolater Translator</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Optional: link to your CSS file -->
+    <title>English to Interpolater Translator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Interpolater Translator</h1>
-    
-    <!-- English to Interpolater Translation -->
-    <div>
-        <h2>Translate English to Interpolater</h2>
-        <input id="englishInput" type="text" placeholder="Enter text in English" />
-        <button id="translateToInterpolater">Translate to Interpolater</button>
-        <div id="interpolaterOutput"></div>
+    <div class="container">
+        <h1>English to Interpolater Translator</h1>
+        <textarea id="inputText" placeholder="Type text to translate..."></textarea>
+        <button id="translateButton">Translate</button>
+        <p id="result"></p>
+        <p id="definitions"></p>
+        <p>Note: Use "li" or "les" or "le" or "lu" before the words for Interpolater.</p>
     </div>
 
-    <!-- Interpolater to English Translation -->
-    <div>
-        <h2>Translate Interpolater to English</h2>
-        <input id="interpolaterInput" type="text" placeholder="Enter text in Interpolater" />
-        <button id="translateToEnglish">Translate to English</button>
-        <div id="englishOutput"></div>
-        <div id="suggestionOutput"></div> <!-- Suggestions for untranslated words -->
-    </div>
-
-    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
