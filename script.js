@@ -31,8 +31,7 @@ const interpolaterToEnglish = {
     "donem": "give",
     "dormiren": "sleep",
     "durbius": "animal",
-    "dzai": "is/on/in", // Combined definitions
-    "dzai": ["is", "on", "in"], // Expanded meanings
+    "dzai": ["is", "on", "in"], // Combined definitions
     "dzwo": "left",
     "e": "and",
     "ego": "I/me",
@@ -163,10 +162,173 @@ const interpolaterToEnglish = {
 
 // Mapping gender articles for translation
 const genderArticles = {
-    "object": "le",
-    "human": "li",
-    "animal": "lu",
-    "other": "les"
+    "animal": "lu",  // For animals
+    "human": "li",    // For humans
+    "object": "le",   // For objects
+    "other": "les"    // For other categories
+};
+
+// Define gender mappings for individual words (example assignments)
+const wordGenders = {
+       "abais": "les",
+    "aktion": "les",
+    "albiner": "les",
+    "apolies": "les",
+    "ba": "?", // Question marker
+    "baksu": "le",
+    "bévakoof": "li",
+    "béyâhend": "les",
+    "blemiken": "li",
+    "bligau": "les",
+    "boissonus": "li",
+    "boissonen": "li",
+    "bom": "les",
+    "bomer": "les",
+    "bonat": "le",
+    "buhdich": "li",
+    "centrum": "li",
+    "cerebrent": "les",
+    "cerebrum": "le",
+    "cha": "le",
+    "chay": "les",
+    "chistando": "les",
+    "chukas": "lu",
+    "dawr": "les",
+    "daz": "les",
+    "degistermen": "les",
+    "direken": "les",
+    "diktonary": "le",
+    "diz": "les",
+    "donem": "les",
+    "dormiren": "les",
+    "durbius": "li",
+    "dzai": "les", // Combined definitions
+    "dzwo": "les",
+    "e": "les",
+    "ego": "li",
+    "en": "les",
+    "equival": "les",
+    "ergo": "les",
+    "exlirent": "les",
+    "fache": "les",
+    "fazen": "les",
+    "feminas": "li",
+    "folaaz": "le",
+    "fransosik": "le",
+    "genus": "les",
+    "ghurfa": "le",
+    "go": "li",
+    "granda": "les",
+    "gratien": "les",
+    "haiben": "les",
+    "halo": "les",
+    "hamborgar": "le",
+    "hic": "les",
+    "hicsolum": "les",
+    "homo": "les",
+    "homoparole": "les",
+    "homosignum": "les",
+    "imaj": "le",
+    "ind": "les",
+    "inglisik": "les",
+    "intelgenri": "les",
+    "intapole": "les",
+    "ist": "les",
+    "italiski": "les",
+    "jeulo": "les",
+    "kayen": "les",
+    "ke": "les",
+    "keken": "les",
+    "ke tal": "les",
+    "keyöntemus": "les",
+    "keyuzwo": "les",
+    "komorenden": "les",
+    "kribân": "les",
+    "kulora": "les",
+    "laterin": "le",
+    "lii": "les",
+    "lingue": "les",
+    "lun": "le",
+    "marok": "les",
+    "marokan": "les",
+    "maskulinas": ["man", "male"],
+    "me": "to me",
+    "monomus": "only",
+    "mort": "dead",
+    "morten": "kill",
+    "mui": "very",
+    "nain": "no",
+    "naint": "not",
+    "nainbom": "bad",
+    "nainchay": "nothing",
+    "nainthomo": "different",
+    "nazion": "nation",
+    "nôchüch": "annoying",
+    "noi": "we",
+    "nomus": "name",
+    "noven": "new",
+    "numerus": "number",
+    "omni": "every",
+    "omniblemiken": "announce",
+    "omniblemikus": "announcement",
+    "omnipersoni": "everyone",
+    "onnoek": "genderless",
+    "oranj": "orange",
+    "ow": "or",
+    "parole": "word",
+    "pensen": "think",
+    "per": "to",
+    "perr": "too",
+    "persone": "people",
+    "pien": "because",
+    "pizza": "pizza",
+    "praesen": "present",
+    "prochrono": "future",
+    "pumilen": "choose",
+    "pumilus": "choice",
+    "quanchrono": "when",
+    "quus": "any/who",
+    "reglus": "rule",
+    "route": "red",
+    "se": "to them",
+    "sang": "up",
+    "sangaktiven": "having fun", // Changed to 'having fun'
+    "sangchay": "important",
+    "shangaro": "angel",
+    "shishten": "poop",
+    "shworz": "black",
+    "shworza": "black coffee",
+    "signum": "meaning",
+    "sol": "sun",
+    "solsang": "sunrise",
+    "solsya": "sunset",
+    "solum": "day",
+    "sum": "am",
+    "susaly": "auto",
+    "sya": "down",
+    "syaaktiven": "bored",
+    "te": "to you",
+    "tu": "you",
+    "tuf": "apple",
+    "urinam": "urinate",
+    "usa": "use",
+    "vescum": "eat",
+    "viden": "see",
+    "vïowl": "purple",
+    "vocarus": "voice",
+    "vor": "for",
+    "vorke": "why",
+    "volerem": "want",
+    "vruncha": "green tea",
+    "vrün": "green",
+    "wilkvenden": "welcome",
+    "woru": "tired",
+    "yönetmekus": "administrator",
+    "yönetmen": "administrate",
+    "yöntemus": "method",
+    "you": "right",
+    "za": "tea",
+    "zi": "yes"
 };
 
 const englishToInterpolater = Object.fromEntries(
@@ -206,30 +368,22 @@ document.getElementById('translateToInterpolater').addEventListener('click', fun
     for (const word of words) {
         const interpolaterWord = englishToInterpolater[word];
         if (interpolaterWord) {
-            output += `${genderArticles["object"]} ${interpolaterWord} `; // Assume objects by default
-        } else if (word.endsWith('s')) { // Check for plural nouns
-            const singularWord = word.slice(0, -1); // Remove 's'
-            const interpolaterSingularWord = englishToInterpolater[singularWord];
-            if (interpolaterSingularWord) {
-                output += `${genderArticles["object"]} ${interpolaterSingularWord}i `; // Add 'i' for plural
-            } else {
-                output = 'Error: Unable to translate the sentence or word.';
-                break; // Stop processing on error
+            let article = genderArticles["object"]; // Default to object
+            if (wordGenders[interpolaterWord]) {
+                // Use the predefined gender for this word
+                article = genderArticles[wordGenders[interpolaterWord]];
             }
+            output += `${article} ${interpolaterWord} `; // Add gender article and word
         } else {
-            const conjugatedWord = conjugateVerb(word);
-            if (conjugatedWord) {
-                output += `${genderArticles["human"]} ${conjugatedWord} `; // Assume human action
-            } else {
-                output = 'Error: Unable to translate the sentence or word.';
-                break; // Stop processing on error
-            }
+            output = 'Error: Unable to translate the sentence or word.';
+            break; // Stop processing on error
         }
     }
 
     document.getElementById('interpolaterOutput').innerText = output.trim();
 });
 
+// Verb conjugation function
 function conjugateVerb(word) {
     // Simple verb conjugation rules (extend as necessary)
     if (word === 'go') return 'gan'; // Example conjugation
