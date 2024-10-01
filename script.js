@@ -121,7 +121,7 @@ const interpolaterToEnglish = {
     "route": "red",
     "se": "to them",
     "sang": "up",
-    "sangaktiven": "fun",
+    "sangaktiven": "fun", // Changed to 'fun'
     "sangchay": "important",
     "shangaro": "angel",
     "shishten": "poop",
@@ -176,22 +176,14 @@ document.getElementById('translateToEnglish').addEventListener('click', function
     const input = document.getElementById('interpolaterInput').value.toLowerCase().trim();
     const words = input.split(' ');
     let output = '';
-    let suggestions = '';
 
     for (const word of words) {
         if (interpolaterToEnglish[word]) {
             output += interpolaterToEnglish[word] + ' ';
-        } else {
-            suggestions += `Cannot translate "${word}". `;
-            const similarWords = findSimilarWords(word);
-            if (similarWords.length > 0) {
-                suggestions += 'Did you mean: ' + similarWords.join(', ') + '? ';
-            }
         }
     }
 
     document.getElementById('englishOutput').innerText = output.trim() || 'No translation found.';
-    document.getElementById('suggestionOutput').innerText = suggestions || '';
 });
 
 document.getElementById('translateToInterpolater').addEventListener('click', function() {
@@ -224,11 +216,6 @@ document.getElementById('translateToInterpolater').addEventListener('click', fun
     document.getElementById('interpolaterOutput').innerText = output.trim() || 'No translation found.';
 });
 
-// Function to find similar words in English
-function findSimilarWords(word) {
-    return Object.keys(englishToInterpolater).filter(w => w.includes(word) || word.includes(w));
-}
-
 // Verb conjugation function
 function conjugateVerb(word) {
     if (word.endsWith('o')) {
@@ -241,8 +228,8 @@ function conjugateVerb(word) {
         return word.slice(0, -3) + 'nos'; // We
     } else if (word.endsWith('tis')) {
         return word.slice(0, -3) + 'tis'; // You (plural)
-    } else if (word.endsWith('nt')) {
-        return word.slice(0, -2) + 'nt'; // They
+    } else if (word.endsWith('tus')) {
+        return word.slice(0, -3) + 'tus'; // They
     }
-    return null; // Return null if no conjugation is found
+    return null;
 }
