@@ -155,7 +155,10 @@ const interpolaterToEnglish = {
     "yöntemus": "method",
     "you": "right",
     "za": "tea",
-    "zi": "yes"
+    "zi": "yes",
+    "," : ",",
+    " " : " "
+    
 };
 
 // Inverse mapping from English to Interpolater
