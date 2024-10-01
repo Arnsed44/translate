@@ -31,7 +31,8 @@ const interpolaterToEnglish = {
     "donem": "give",
     "dormiren": "sleep",
     "durbius": "animal",
-    "dzai": "is in/on",
+    "dzai": "is/on/in", // Combined definitions
+    "dzai": ["is", "on", "in"], // Expanded meanings
     "dzwo": "left",
     "e": "and",
     "ego": "I/me",
@@ -41,20 +42,20 @@ const interpolaterToEnglish = {
     "exlirent": "explain",
     "fache": "do",
     "fazen": "make",
-    "feminas": "woman",
+    "feminas": ["woman", "female"],
     "folaaz": "metal",
     "fransosik": "france",
     "genus": "gender",
     "ghurfa": "room",
     "go": "I/me",
-    "granda": "very",
+    "granda": ["very", "extremely"],
     "gratien": "thanks",
     "haiben": "have",
     "halo": "hello",
     "hamborgar": "hamburger",
     "hic": "here",
     "hicsolum": "today",
-    "homo": "same",
+    "homo": ["same", "identical"],
     "homoparole": "homonym",
     "homosignum": "synonym",
     "imaj": "image",
@@ -80,7 +81,7 @@ const interpolaterToEnglish = {
     "lun": "moon",
     "marok": "Morocco",
     "marokan": "Moroccan",
-    "maskulinas": "man",
+    "maskulinas": ["man", "male"],
     "me": "to me",
     "monomus": "only",
     "mort": "dead",
@@ -169,7 +170,13 @@ const genderArticles = {
 };
 
 const englishToInterpolater = Object.fromEntries(
-    Object.entries(interpolaterToEnglish).map(([key, value]) => [value, key])
+    Object.entries(interpolaterToEnglish).map(([key, value]) => {
+        // Handle cases where the value is an array of synonyms
+        if (Array.isArray(value)) {
+            return [value[0], key]; // Use the first synonym for direct translation
+        }
+        return [value, key];
+    })
 );
 
 document.getElementById('translateToEnglish').addEventListener('click', function() {
@@ -179,11 +186,16 @@ document.getElementById('translateToEnglish').addEventListener('click', function
 
     for (const word of words) {
         if (interpolaterToEnglish[word]) {
-            output += interpolaterToEnglish[word] + ' ';
+            // If the value is an array, join with a slash for options
+            const translation = Array.isArray(interpolaterToEnglish[word]) ? interpolaterToEnglish[word].join('/') : interpolaterToEnglish[word];
+            output += translation + ' ';
+        } else {
+            output = 'Error: Unable to translate the sentence or word.';
+            break; // Stop processing on error
         }
     }
 
-    document.getElementById('englishOutput').innerText = output.trim() || 'No translation found.';
+    document.getElementById('englishOutput').innerText = output.trim();
 });
 
 document.getElementById('translateToInterpolater').addEventListener('click', function() {
@@ -201,34 +213,40 @@ document.getElementById('translateToInterpolater').addEventListener('click', fun
             if (interpolaterSingularWord) {
                 output += `${genderArticles["object"]} ${interpolaterSingularWord}i `; // Add 'i' for plural
             } else {
-                output += singularWord + ' '; // Leave untranslated words
+                output = 'Error: Unable to translate the sentence or word.';
+                break; // Stop processing on error
             }
         } else {
             const conjugatedWord = conjugateVerb(word);
             if (conjugatedWord) {
                 output += `${genderArticles["human"]} ${conjugatedWord} `; // Assume human actions by default
             } else {
-                output += word + ' '; // Leave untranslated words
+                output = 'Error: Unable to translate the sentence or word.';
+                break; // Stop processing on error
             }
         }
     }
 
-    document.getElementById('interpolaterOutput').innerText = output.trim() || 'No translation found.';
+    document.getElementById('interpolaterOutput').innerText = output.trim();
 });
 
-// Verb conjugation function
+// Example verb conjugation function
 function conjugateVerb(word) {
-    if (word.endsWith('o')) {
-        return word.slice(0, -1) + 'o'; // I
-    } else if (word.endsWith('s')) {
-        return word.slice(0, -1) + 's'; // You
-    } else if (word.endsWith('t')) {
-        return word.slice(0, -1) + 't'; // He/She/It
-    } else if (word.endsWith('nos')) {
-        return word.slice(0, -3) + 'nos'; // We
-    } else if (word.endsWith('tis')) {
-        return word.slice(0, -3) + 'tis'; // You (plural)
-    } else if (word.endsWith('tus')) {
+    if (word.endsWith('e')) {
+        return word.slice(0, -1) + 'e'; // Example: "make" -> "make"
+    } else if (word.endsWith('d')) {
+        return word.slice(0, -1) + 'den'; // Example: "played" -> "playden"
+    } else if (word.endsWith('y')) {
+        return word.slice(0, -1) + 'ie'; // Example: "cry" -> "crie"
+    } else if (word.endsWith('ing')) {
+        return word.slice(0, -3) + 'inden'; // Example: "running" -> "runinden"
+    }
+    return null;
+}
+
+// Example common word mapping function
+function commonWordMapping(word) {
+    if (word.endsWith('tus')) {
         return word.slice(0, -3) + 'tus'; // They
     }
     return null;
