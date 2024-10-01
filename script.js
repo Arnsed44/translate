@@ -3,14 +3,14 @@ const interpolaterToEnglish = {
     "aktion": "action",
     "albiner": "white",
     "apolies": "sorry",
-    "ba": "?",
+    "ba": "?", // Question marker
     "baksu": "box",
     "bévakoof": "stupid",
     "béyâhend": "okay",
     "blemiken": "speak",
     "bligau": "blue",
     "boissonus": "drink",
-    "boissonen": "drink (verb)",
+    "boissonen": "drink",
     "bom": "good",
     "bomer": "love",
     "bonat": "gift",
@@ -43,8 +43,7 @@ const interpolaterToEnglish = {
     "fazen": "make",
     "feminas": "woman",
     "folaaz": "metal",
-    "folaazpersone": "robot",
-    "fransosik": "France",
+    "fransosik": "france",
     "genus": "gender",
     "ghurfa": "room",
     "go": "I/me",
@@ -79,11 +78,10 @@ const interpolaterToEnglish = {
     "lii": "inside",
     "lingue": "language",
     "lun": "moon",
-    "lunum": "night",
     "marok": "Morocco",
     "marokan": "Moroccan",
     "maskulinas": "man",
-    "me": "shows it is directed to me",
+    "me": "to me",
     "monomus": "only",
     "mort": "dead",
     "morten": "kill",
@@ -95,7 +93,7 @@ const interpolaterToEnglish = {
     "nainthomo": "different",
     "nazion": "nation",
     "nôchüch": "annoying",
-    "noi": "we/us",
+    "noi": "we",
     "nomus": "name",
     "noven": "new",
     "numerus": "number",
@@ -110,19 +108,18 @@ const interpolaterToEnglish = {
     "pensen": "think",
     "per": "to",
     "perr": "too",
-    "personepumilus": "poll",
     "persone": "people",
     "pien": "because",
     "pizza": "pizza",
     "praesen": "present",
-    "prochrono": "future tense marker",
+    "prochrono": "future",
     "pumilen": "choose",
     "pumilus": "choice",
     "quanchrono": "when",
-    "quus": "anybody",
+    "quus": "any/who",
     "reglus": "rule",
     "route": "red",
-    "se": "shows it is directed to them",
+    "se": "to them",
     "sang": "up",
     "sangaktiven": "fun",
     "sangchay": "important",
@@ -139,7 +136,7 @@ const interpolaterToEnglish = {
     "susaly": "auto",
     "sya": "down",
     "syaaktiven": "bored",
-    "te": "shows it is directed to you",
+    "te": "to you",
     "tu": "you",
     "tuf": "apple",
     "urinam": "urinate",
@@ -160,35 +157,90 @@ const interpolaterToEnglish = {
     "yöntemus": "method",
     "you": "right",
     "za": "tea",
-    "zi": "yes",
+    "zi": "yes"
 };
 
-const englishToInterpolater = Object.fromEntries(
-    Object.entries(interpolaterToEnglish).map(([key, value]) => [value, key])
-);
+// Mapping gender articles for translation
+const genderArticles = {
+    "object": "le",
+    "human": "li",
+    "animal": "lu",
+    "other": "les"
+};
 
-function translateToInterpolater() {
-    const input = document.getElementById("inputText").value.toLowerCase();
-    const words = input.split(" ");
-    const translatedWords = words.map(word => interpolaterToEnglish[word]);
-    
-    // Check if all words were translated
-    if (translatedWords.includes(undefined)) {
-        document.getElementById("outputText").value = "Error: One or more words cannot be translated.";
-    } else {
-        document.getElementById("outputText").value = translatedWords.join(" ");
+const englishToInterpolater = Object.fromEntries(Object.entries(interpolaterToEnglish).map(([key, value]) => [value, key]));
+
+document.getElementById('translateToEnglish').addEventListener('click', function() {
+    const input = document.getElementById('interpolaterInput').value.toLowerCase().trim();
+    const words = input.split(' ');
+    let output = '';
+    let suggestions = '';
+
+    for (const word of words) {
+        if (interpolaterToEnglish[word]) {
+            output += interpolaterToEnglish[word] + ' ';
+        } else {
+            suggestions += `Cannot translate "${word}". `;
+            const similarWords = findSimilarWords(word);
+            if (similarWords.length > 0) {
+                suggestions += 'Did you mean: ' + similarWords.join(', ') + '? ';
+            }
+        }
     }
+
+    document.getElementById('englishOutput').innerText = output.trim() || 'No translation found.';
+    document.getElementById('suggestionOutput').innerText = suggestions || '';
+});
+
+document.getElementById('translateToInterpolater').addEventListener('click', function() {
+    const input = document.getElementById('englishInput').value.toLowerCase().trim();
+    const words = input.split(' ');
+    let output = '';
+
+    for (const word of words) {
+        const interpolaterWord = englishToInterpolater[word];
+        if (interpolaterWord) {
+            output += `${genderArticles["object"]} ${interpolaterWord} `; // Assume objects by default
+        } else if (word.endsWith('s')) { // Check for plural nouns
+            const singularWord = word.slice(0, -1); // Remove 's'
+            const interpolaterSingularWord = englishToInterpolater[singularWord];
+            if (interpolaterSingularWord) {
+                output += `${genderArticles["object"]} ${interpolaterSingularWord}i `; // Add 'i' for plural
+            } else {
+                output += singularWord + ' '; // Leave untranslated words
+            }
+        } else {
+            const conjugatedWord = conjugateVerb(word);
+            if (conjugatedWord) {
+                output += `${genderArticles["human"]} ${conjugatedWord} `; // Assume human actions by default
+            } else {
+                output += word + ' '; // Leave untranslated words
+            }
+        }
+    }
+
+    document.getElementById('interpolaterOutput').innerText = output.trim() || 'No translation found.';
+});
+
+// Function to find similar words in English
+function findSimilarWords(word) {
+    return Object.keys(englishToInterpolater).filter(w => w.includes(word) || word.includes(w));
 }
 
-function translateToEnglish() {
-    const input = document.getElementById("inputText").value.toLowerCase();
-    const words = input.split(" ");
-    const translatedWords = words.map(word => englishToInterpolater[word]);
-    
-    // Check if all words were translated
-    if (translatedWords.includes(undefined)) {
-        document.getElementById("outputText").value = "Error: One or more words cannot be translated.";
-    } else {
-        document.getElementById("outputText").value = translatedWords.join(" ");
+// Verb conjugation function
+function conjugateVerb(word) {
+    if (word.endsWith('o')) {
+        return word.slice(0, -1) + 'o'; // I
+    } else if (word.endsWith('s')) {
+        return word.slice(0, -1) + 's'; // You
+    } else if (word.endsWith('t')) {
+        return word.slice(0, -1) + 't'; // He/She/It
+    } else if (word.endsWith('nos')) {
+        return word.slice(0, -3) + 'nos'; // We
+    } else if (word.endsWith('tis')) {
+        return word.slice(0, -3) + 'tis'; // You (plural)
+    } else if (word.endsWith('nt')) {
+        return word.slice(0, -2) + 'nt'; // They
     }
+    return null; // Return null if no conjugation is found
 }
