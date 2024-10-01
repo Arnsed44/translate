@@ -31,7 +31,6 @@ const interpolaterToEnglish = {
     "donem": "give",
     "dormiren": "sleep",
     "durbius": "animal",
-    "dzai": "is/on/in", // Combined definitions
     "dzai": ["is", "on", "in"], // Expanded meanings
     "dzwo": "left",
     "e": "and",
@@ -122,7 +121,7 @@ const interpolaterToEnglish = {
     "route": "red",
     "se": "to them",
     "sang": "up",
-    "sangaktiven": "fun", // Changed to 'fun'
+    "sangaktiven": "fun",
     "sangchay": "important",
     "shangaro": "angel",
     "shishten": "poop",
@@ -169,13 +168,182 @@ const genderArticles = {
     "other": "les"
 };
 
+// Define the type of words with gender articles
+const wordTypes = {
+    "abais": "other",
+    "aktion": "other",
+    "albiner": "other",
+    "apolies": "other",
+    "ba": "other", // Question marker
+    "baksu": "other",
+    "bévakoof": "other",
+    "béyâhend": "other",
+    "blemiken": "other",
+    "bligau": "other",
+    "boissonus": "other",
+    "boissonen": "other",
+    "bom": "other",
+    "bomer": "human", // love
+    "bonat": "other",
+    "buhdich": "other",
+    "centrum": "human", // I/me
+    "cerebrent": "other",
+    "cerebrum": "other",
+    "cha": "other",
+    "chay": "other",
+    "chistando": "other",
+    "chukas": "animal", // cat
+    "dawr": "other",
+    "daz": "other",
+    "degistermen": "other",
+    "direken": "other",
+    "diktonary": "other",
+    "diz": "other",
+    "donem": "other",
+    "dormiren": "other",
+    "durbius": "animal", // animal
+    "dzai": "other",
+    "dzwo": "other",
+    "e": "other",
+    "ego": "human", // I/me
+    "en": "other",
+    "equival": "other",
+    "ergo": "other",
+    "exlirent": "other",
+    "fache": "other",
+    "fazen": "other",
+    "feminas": "human", // woman/female
+    "folaaz": "other", // metal
+    "fransosik": "other",
+    "genus": "other",
+    "ghurfa": "other",
+    "go": "human", // I/me
+    "granda": "other",
+    "gratien": "other",
+    "haiben": "other",
+    "halo": "other",
+    "hamborgar": "other",
+    "hic": "other",
+    "hicsolum": "other",
+    "homo": "other",
+    "homoparole": "other",
+    "homosignum": "other",
+    "imaj": "other",
+    "ind": "other",
+    "inglisik": "other",
+    "intelgenri": "other",
+    "intapole": "other",
+    "ist": "other",
+    "italiski": "other",
+    "jeulo": "other",
+    "kayen": "other",
+    "ke": "other",
+    "keken": "other",
+    "ke tal": "other",
+    "keyöntemus": "other",
+    "keyuzwo": "other",
+    "komorenden": "other",
+    "kribân": "other",
+    "kulora": "other",
+    "laterin": "other",
+    "lii": "other",
+    "lingue": "other",
+    "lun": "other",
+    "marok": "other",
+    "marokan": "other",
+    "maskulinas": "human", // man/male
+    "me": "human", // to me
+    "monomus": "other",
+    "mort": "other",
+    "morten": "other",
+    "mui": "other",
+    "nain": "other",
+    "naint": "other",
+    "nainbom": "other",
+    "nainchay": "other",
+    "nainthomo": "other",
+    "nazion": "other",
+    "nôchüch": "other",
+    "noi": "human", // we
+    "nomus": "other",
+    "noven": "other",
+    "numerus": "other",
+    "omni": "other",
+    "omniblemiken": "other",
+    "omniblemikus": "other",
+    "omnipersoni": "human", // everyone
+    "onnoek": "other",
+    "oranj": "other",
+    "ow": "other",
+    "parole": "other",
+    "pensen": "other",
+    "per": "other",
+    "perr": "other",
+    "persone": "human", // people
+    "pien": "other",
+    "pizza": "other",
+    "praesen": "other",
+    "prochrono": "other",
+    "pumilen": "other",
+    "pumilus": "other",
+    "quanchrono": "other",
+    "quus": "other",
+    "reglus": "other",
+    "route": "other",
+    "se": "other",
+    "sang": "other",
+    "sangaktiven": "other",
+    "sangchay": "other",
+    "shangaro": "other",
+    "shishten": "other",
+    "shworz": "other",
+    "shworza": "other",
+    "signum": "other",
+    "sol": "other",
+    "solsang": "other",
+    "solsya": "other",
+    "solum": "other",
+    "sum": "other",
+    "susaly": "other",
+    "sya": "other",
+    "syaaktiven": "other",
+    "te": "other",
+    "tu": "human", // you
+    "tuf": "other",
+    "urinam": "other",
+    "usa": "other",
+    "vescum": "other",
+    "viden": "other",
+    "vïowl": "other",
+    "vocarus": "other",
+    "vor": "other",
+    "vorke": "other",
+    "volerem": "other",
+    "vruncha": "other",
+    "vrün": "other",
+    "wilkvenden": "other",
+    "woru": "other",
+    "yönetmekus": "human", // administrator
+    "yönetmen": "other", // administrate
+    "yöntemus": "other",
+    "you": "other",
+    "za": "other",
+    "zi": "other"
+};
+
+const genderArticles = {
+    "object": "le",
+    "human": "li",
+    "animal": "lu",
+    "other": "les"
+};
+
 const englishToInterpolater = Object.fromEntries(
-    Object.entries(interpolaterToEnglish).map(([key, value]) => {
-        // Handle cases where the value is an array of synonyms
-        if (Array.isArray(value)) {
-            return [value[0], key]; // Use the first synonym for direct translation
-        }
-        return [value, key];
+    Object.entries(interpolaterToEnglish).flatMap(([key, value]) => {
+        // Check if value is an array and map accordingly
+        return Array.isArray(value) 
+            ? value.map(v => [v, key]) 
+            : [[value, key]];
     })
 );
 
@@ -186,16 +354,13 @@ document.getElementById('translateToEnglish').addEventListener('click', function
 
     for (const word of words) {
         if (interpolaterToEnglish[word]) {
-            // If the value is an array, join with a slash for options
-            const translation = Array.isArray(interpolaterToEnglish[word]) ? interpolaterToEnglish[word].join('/') : interpolaterToEnglish[word];
-            output += translation + ' ';
-        } else {
-            output = 'Error: Unable to translate the sentence or word.';
-            break; // Stop processing on error
+            output += Array.isArray(interpolaterToEnglish[word]) 
+                ? interpolaterToEnglish[word][0] + ' ' // Just take the first translation
+                : interpolaterToEnglish[word] + ' ';
         }
     }
 
-    document.getElementById('englishOutput').innerText = output.trim();
+    document.getElementById('englishOutput').innerText = output.trim() || 'No translation found.';
 });
 
 document.getElementById('translateToInterpolater').addEventListener('click', function() {
@@ -213,41 +378,29 @@ document.getElementById('translateToInterpolater').addEventListener('click', fun
             if (interpolaterSingularWord) {
                 output += `${genderArticles["object"]} ${interpolaterSingularWord}i `; // Add 'i' for plural
             } else {
-                output = 'Error: Unable to translate the sentence or word.';
-                break; // Stop processing on error
+                output += singularWord + ' '; // Leave untranslated words
             }
         } else {
             const conjugatedWord = conjugateVerb(word);
             if (conjugatedWord) {
                 output += `${genderArticles["human"]} ${conjugatedWord} `; // Assume human actions by default
             } else {
-                output = 'Error: Unable to translate the sentence or word.';
-                break; // Stop processing on error
+                output += word + ' '; // Leave untranslated words
             }
         }
     }
 
-    document.getElementById('interpolaterOutput').innerText = output.trim();
+    document.getElementById('interpolaterOutput').innerText = output.trim() || 'No translation found.';
 });
 
-// Example verb conjugation function
+// Verb conjugation function
 function conjugateVerb(word) {
-    if (word.endsWith('e')) {
-        return word.slice(0, -1) + 'e'; // Example: "make" -> "make"
-    } else if (word.endsWith('d')) {
-        return word.slice(0, -1) + 'den'; // Example: "played" -> "playden"
-    } else if (word.endsWith('y')) {
-        return word.slice(0, -1) + 'ie'; // Example: "cry" -> "crie"
+    if (word.endsWith('o')) {
+        return word.slice(0, -1) + 'o'; // I
+    } else if (word.endsWith('ed')) {
+        return word.slice(0, -2) + 'e'; // Past simple
     } else if (word.endsWith('ing')) {
-        return word.slice(0, -3) + 'inden'; // Example: "running" -> "runinden"
+        return word.slice(0, -3) + 'ant'; // Continuous
     }
-    return null;
-}
-
-// Example common word mapping function
-function commonWordMapping(word) {
-    if (word.endsWith('tus')) {
-        return word.slice(0, -3) + 'tus'; // They
-    }
-    return null;
+    return null; // No conjugation found
 }
